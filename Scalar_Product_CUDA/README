@@ -1,0 +1,13 @@
+Description:
+CUDA code to compute in parallel the dot product of two
+random single precision floating-point vectors with size N = 1<<24;
+
+kernel1: uses shared memory and parallel reduction to
+calculate partial sum on each thread block. (Adds up all the
+partial sums on CPU after transferring all the partial sums back
+to host from device)
+
+kernel2: uses shared memory, parallel reduction, and atomic
+function or atomic lock to perform the entire computation on
+GPU. (Transfer the final dot product result back to host from
+device)
