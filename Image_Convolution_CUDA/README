@@ -1,0 +1,74 @@
+Name: Shashi Shivaraju
+email: shonnah@g.clemson.edu
+XID : C88650674
+
+Motivation:
+In Image processing,convolution is a process of adding up pixels multiplied by various
+weights and a kernel a small matrix of weights  which is used for blurring,sharpening,
+embossing,edge detection, and more.These effects are accomplished by doing a convolution
+between a kernel and an image.
+
+The convolution operation is computationally intensive,since the kernel is 
+used for each pixel present in the image.As the size of image and the size of kernel
+increases the time taken to perform convolution also increases.
+Thus this project tries to utilize GPU's computing capabilities to speed up convolution.
+
+Description : 
+The project contains a CUDA program:"convolution".
+The "convolution" program performs convolution operation using a filter with the input greyscale PPM image.
+Here the convolution operation is performed twice,i.e. first on CPU by using sequential method and 
+next on GPU by using parallel method to analyse the performance and to calculate the speedup achieved.
+
+Usage and Features:
+
+1)Build the executables using Makefile.
+Open a terminal and load the CUDA toolkit.
+Set the path to the project directory.
+Use the commands: make clean;
+				  make;
+				  
+This will build the executables "convolution". 
+or 
+build executable by using the command:
+nvcc -o convolution convolution.cu
+
+2)Convolution with external Filter file
+To perform convolution using the filter file for a greyscale PPM image,
+use the below command:
+
+[Generic]:
+./[exe] [input.ppm] [filter.filt]
+
+eg:
+./convolution hawk.ppm pulse11.filt
+
+[Output on NVIDIA GeForce GT 740M]:
+./convolution hawk.ppm pulse11.filt 
+CPU took 111.254524 milliseconds and output stored as CPU_Output.ppm 
+GPU took 6.062304 milliseconds and output stored as GPU_Output.ppm 
+SpeedUP = GPU time/CPU time = 0.054490
+
+Clearly GPU reduces the convolution time.
+
+Implementation Notes:
+1)The program currently only supports Greyscale PPM image as input.
+In future,if required all major image file formats can be supported using OpenImageIO utility library.
+
+2)I have limited the number of blocks requested for kernel execution to 32,since I wanted to utilize
+a signle thread to compute convolution sums for as many pixels it is possible. 
+
+3)In GPU implementation,since each thread in the block needs to access the kernel/filter data,so
+I have used constant memory to store the kernel data for to save bandwidth,where as the input image and the intermediate 
+intermediate convolution for each pixel are stored at global memory.  
+
+4)At GPU ,I am computing the intermediate convolution sum for each pixel,and then the 
+normalization process to convert it to a greyscale PPM image is done back at the CPU.
+
+5)I have utilized CUDA events for time profiling. 
+
+Reference:
+1)Greyscale PPM images from Dr Adam Hoover's ECE6310 Introduction to Computer Vision:
+http://cecas.clemson.edu/~ahoover/ece431/images/
+
+2)Filter files from Dr Ioannis Karamouzas's CPSC6040 Computer Graphics Images:
+https://sites.google.com/a/g.clemson.edu/cpsc-6040/assignments/hw4
