@@ -1,0 +1,26 @@
+Name: Shashi Shivaraju
+email: shonnah@g.clemson.edu
+XID : C88650674
+
+Description :
+The project contains the program:  "OpenCLMatMul".
+The "OpenCLMatMul" program performs matrix multiplication of two 40x40 input matrices.
+
+Usage and Features:
+1)Build the executables using Makefile.
+Open a terminal and set the path to the project directory.
+Use the commands: make clean;
+				  make;
+This will build the executables "OpenCLMatMul".
+
+2)Program execution
+The program performs the matrix multiplication operation and displays the 
+time taken by the kernel to perform it.
+
+To display the resultant matrix on the terminal,please enable the macro
+#undef DEBUG_MODE in the file MatrixMul.cpp
+This will display the resultant matrix calulated using sequential host code and the 
+resultant matrix calulated using OpenCl kernel on the device.
+
+The code is tested using the GPU: NVIDIA Corporation GeForce GT 740M
+The time profile results are recorded in the file Report.pdf
